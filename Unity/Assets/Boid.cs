@@ -40,6 +40,8 @@ public class Boid : MonoBehaviour
         }
     }
 
+
+
     public Vector3 SeekForce(Vector3 target)
     {
         Vector3 desired = target - transform.position;
