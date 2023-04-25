@@ -16,4 +16,13 @@ public class Dodec : MonoBehaviour
         //rotate attached object 1 whole rotation every second
         transform.Rotate(0, 0, 360 * Time.deltaTime/5);
     }
+
+    //when Main Camera collides the trigger activates and Dodec locks to the centerof the dodec
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "MainCamera")
+        {
+            other.transform.parent = transform;
+        }
+    }
 }
