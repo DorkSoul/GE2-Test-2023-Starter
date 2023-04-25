@@ -42,13 +42,6 @@ public class Dodec : MonoBehaviour
             GameObject.FindWithTag("FrontEnd").AddComponent<FPSController>();
         }
 
-        if (other.gameObject.tag == "MainCamera")
-        {
-            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<NoiseWander>());
-            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<Seek>());
-
-        }
-
     }
     void OnTriggerStay(Collider other)
     {
@@ -58,12 +51,32 @@ public class Dodec : MonoBehaviour
             other.transform.rotation = Quaternion.Slerp(other.transform.rotation, GameObject.FindWithTag("BackEnd").transform.rotation, Time.deltaTime * 1);
         }
 
-        //smoothly move tag MainCamera to center of dodec
+        //smoothly move MainCamera to center of dodec
         if (other.gameObject.tag == "MainCamera")
         {
-            other.transform.position = Vector3.Lerp(other.transform.position, GameObject.FindWithTag("Dodec").transform.position, Time.deltaTime * 1);
+            other.transform.position = Vector3.Lerp(other.transform.position, GameObject.FindWithTag("Dodec").transform.position, Time.deltaTime * 2);
         }
 
+        //if z key is pressed on keyboard remove all parents from Maincamera, reable boid control, swap control of the camera
+        if (GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control == true && Input.GetKey(KeyCode.Z)){
+            GameObject.FindWithTag("MainCamera").transform.parent = null;
+            GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control = false;
+            GameObject.FindWithTag("MainCamera").AddComponent<FPSController>();
+            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<FPSController>());
+        }
+        
+        //DO A BARREL ROLL!
+        if (GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control == true && Input.GetKey(KeyCode.B)){
+            
+            GameObject.FindWithTag("FrontEnd").transform.Rotate(0, 0, 360 * Time.deltaTime/5);
+            GameObject.FindWithTag("Body1").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
+            GameObject.FindWithTag("Body2").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
+            GameObject.FindWithTag("Body3").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
+            GameObject.FindWithTag("BackEnd").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
+
+            // GameObject.FindWithTag("MainCamera").transform.RotateAround(GameObject.FindWithTag("BackEnd").transform.position, GameObject.FindWithTag("FrontEnd").transform.forward, 60 * Time.deltaTime);
+            GameObject.FindWithTag("Dodec").transform.RotateAround(GameObject.FindWithTag("BackEnd").transform.position, GameObject.FindWithTag("FrontEnd").transform.forward, 80 * Time.deltaTime);
+        }
     }
     void OnTriggerExit(Collider other)
     {   //remove MainCamera from parent
