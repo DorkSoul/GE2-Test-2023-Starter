@@ -69,10 +69,10 @@ public class Dodec : MonoBehaviour
         if (GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control == true && Input.GetKey(KeyCode.B)){
             
             GameObject.FindWithTag("FrontEnd").transform.Rotate(0, 0, 360 * Time.deltaTime/5);
-            GameObject.FindWithTag("Body1").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
-            GameObject.FindWithTag("Body2").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
-            GameObject.FindWithTag("Body3").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
-            GameObject.FindWithTag("BackEnd").transform.Rotate(0, 0, 360 * Time.deltaTime/5); 
+            GameObject.FindWithTag("BackEnd").transform.Rotate(0, 0, 360 * Time.deltaTime/5);
+            // GameObject.FindWithTag("FrontEnd").GetComponent<SpineAnimator>().bones[1].transform.Rotate(0, 0, 360 * Time.deltaTime/5);
+            // GameObject.FindWithTag("FrontEnd").GetComponent<SpineAnimator>().bones[2].transform.Rotate(0, 0, 360 * Time.deltaTime/5);
+            // GameObject.FindWithTag("FrontEnd").GetComponent<SpineAnimator>().bones[3].transform.Rotate(0, 0, 360 * Time.deltaTime/5);
 
             // GameObject.FindWithTag("MainCamera").transform.RotateAround(GameObject.FindWithTag("BackEnd").transform.position, GameObject.FindWithTag("FrontEnd").transform.forward, 60 * Time.deltaTime);
             GameObject.FindWithTag("Dodec").transform.RotateAround(GameObject.FindWithTag("BackEnd").transform.position, GameObject.FindWithTag("FrontEnd").transform.forward, 80 * Time.deltaTime);
