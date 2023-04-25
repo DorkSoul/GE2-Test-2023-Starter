@@ -31,17 +31,22 @@ public class Dodec : MonoBehaviour
             Destroy(other.gameObject.GetComponent<FPSController>());
         }
         
-        //remove boid component from tag FrontEnd when MainCamera is triggered
+        //Set tag FrontEnd boid component control variable to true when MainCamera is triggered
         if (other.gameObject.tag == "MainCamera")
         {
-            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<Boid>());
-            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<NoiseWander>());
-
+            GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control = true;
         }
         //add FPSController component from tag FrontEnd when MainCamera is triggered
         if (other.gameObject.tag == "MainCamera")
         {
             GameObject.FindWithTag("FrontEnd").AddComponent<FPSController>();
+        }
+
+        if (other.gameObject.tag == "MainCamera")
+        {
+            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<NoiseWander>());
+            Destroy(GameObject.FindWithTag("FrontEnd").GetComponent<Seek>());
+
         }
 
     }
@@ -61,10 +66,14 @@ public class Dodec : MonoBehaviour
 
     }
     void OnTriggerExit(Collider other)
-    {   //remove tag MainCamera from parent
+    {   //remove MainCamera from parent
         if (other.gameObject.tag == "MainCamera")
         {
             other.transform.parent = null;
+        }
+        if (other.gameObject.tag == "MainCamera")
+        {
+            GameObject.FindWithTag("FrontEnd").GetComponent<Boid>().control = false;
         }
 
     }

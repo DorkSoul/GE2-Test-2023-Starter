@@ -18,6 +18,7 @@ public class Boid : MonoBehaviour
     public float banking = 0.1f;
     public float maxSpeed = 5.0f;
     public float maxForce = 10.0f;
+    public bool control = false;
 
     public void OnDrawGizmos()
     {
@@ -40,10 +41,10 @@ public class Boid : MonoBehaviour
         }
     }
 
-
-
+    
     public Vector3 SeekForce(Vector3 target)
     {
+
         Vector3 desired = target - transform.position;
         desired.Normalize();
         desired *= maxSpeed;
@@ -103,6 +104,7 @@ public class Boid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (control == false){
         force = Calculate();
         acceleration = force / mass;
         velocity += acceleration * Time.deltaTime;
@@ -116,6 +118,7 @@ public class Boid : MonoBehaviour
 
             transform.position += velocity * Time.deltaTime;
             velocity *= (1.0f - (damping * Time.deltaTime));
+        }
         }
     }
 }
